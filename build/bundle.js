@@ -72,7 +72,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var football_service_1 = __webpack_require__(1);
 var service = new football_service_1.FootballService();
-service.getJSON();
+service.getMatch(function () { });
+service.getTeam(function (teams) {
+    console.log(teams);
+});
 
 
 /***/ }),
@@ -84,15 +87,27 @@ service.getJSON();
 Object.defineProperty(exports, "__esModule", { value: true });
 var FootballService = /** @class */ (function () {
     function FootballService() {
-        this.url = "https://raw.githubusercontent.com/opendatajson/football.json/master/2017-18/it.1.json";
+        this.url = {
+            match: "https://raw.githubusercontent.com/opendatajson/football.json/master/2017-18/it.1.json",
+            team: "https://raw.githubusercontent.com/opendatajson/football.json/master/2017-18/it.1.clubs.json"
+        };
     }
-    FootballService.prototype.getJSON = function () {
+    FootballService.prototype.getJSON = function (url, callBack) {
         this.xhr = new XMLHttpRequest;
-        this.xhr.open("get", this.url);
+        this.xhr.open("get", url);
         this.xhr.onload = function (ev) {
-            console.log(ev.target.response);
+            var data = JSON.parse(ev.target.response);
+            callBack(data);
         };
         this.xhr.send();
+    };
+    FootballService.prototype.getMatch = function (callBack) {
+        this.getJSON(this.url.match, function () { });
+    };
+    FootballService.prototype.getTeam = function (callBack) {
+        this.getJSON(this.url.team, function (data) {
+            callBack(data.clubs);
+        });
     };
     return FootballService;
 }());
