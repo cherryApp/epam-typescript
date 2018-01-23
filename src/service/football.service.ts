@@ -20,14 +20,16 @@ export class FootballService {
         this.xhr.send();
     }
 
-    getMatch(callBack: Function): void {
-        this.getJSON(this.url.match, (data: any) => {
-            let matchArray: Round[] = [];
-            for (let round of data.rounds) {
-                matchArray.push( new Round(round) );
-            }
-            callBack(matchArray);
-        });
+    getMatch(): Promise<Round[]> {
+        return new Promise<Round[]>( (resolve: any, reject: any) => {
+            this.getJSON(this.url.match, (data: any) => {
+                let matchArray: Round[] = [];
+                for (let round of data.rounds) {
+                    matchArray.push( new Round(round) );
+                }
+                resolve(matchArray);
+            });
+        });        
     }
 
     getTeam(callBack: Function): void {

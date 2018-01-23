@@ -72,7 +72,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var football_service_1 = __webpack_require__(1);
 var service = new football_service_1.FootballService();
-service.getMatch(function (matchDays) {
+service.getMatch().then(function (matchDays) {
     console.log(matchDays);
 });
 service.getTeam(function (teams) {
@@ -105,14 +105,17 @@ var FootballService = /** @class */ (function () {
         };
         this.xhr.send();
     };
-    FootballService.prototype.getMatch = function (callBack) {
-        this.getJSON(this.url.match, function (data) {
-            var matchArray = [];
-            for (var _i = 0, _a = data.rounds; _i < _a.length; _i++) {
-                var round = _a[_i];
-                matchArray.push(new round_1.Round(round));
-            }
-            callBack(matchArray);
+    FootballService.prototype.getMatch = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.getJSON(_this.url.match, function (data) {
+                var matchArray = [];
+                for (var _i = 0, _a = data.rounds; _i < _a.length; _i++) {
+                    var round = _a[_i];
+                    matchArray.push(new round_1.Round(round));
+                }
+                resolve(matchArray);
+            });
         });
     };
     FootballService.prototype.getTeam = function (callBack) {
@@ -167,7 +170,6 @@ var Round = /** @class */ (function () {
     function Round(round) {
         this.name = round.name;
         this.matches = [];
-        console.log(round.matches);
         for (var _i = 0, _a = round.matches; _i < _a.length; _i++) {
             var match = _a[_i];
             this.matches.push(new match_1.Match(match));

@@ -7,7 +7,6 @@ export class Round {
     constructor(round: Round) {
         this.name = round.name;
         this.matches = [];
-        console.log(round.matches);
         for (let match of round.matches) {
             this.matches.push( new Match(match) );
         }
