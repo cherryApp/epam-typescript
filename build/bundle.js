@@ -69,6 +69,34 @@
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var football_service_1 = __webpack_require__(1);
+var service = new football_service_1.FootballService();
+service.getJSON();
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var FootballService = /** @class */ (function () {
+    function FootballService() {
+        this.url = "https://raw.githubusercontent.com/opendatajson/football.json/master/2017-18/it.1.json";
+    }
+    FootballService.prototype.getJSON = function () {
+        this.xhr = new XMLHttpRequest;
+        this.xhr.open("get", this.url);
+        this.xhr.onload = function (ev) {
+            console.log(ev.target.response);
+        };
+        this.xhr.send();
+    };
+    return FootballService;
+}());
+exports.FootballService = FootballService;
 
 
 /***/ })
