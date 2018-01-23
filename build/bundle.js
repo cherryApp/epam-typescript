@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,32 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var football_service_1 = __webpack_require__(1);
+var Team = /** @class */ (function () {
+    function Team(team) {
+        this.key = team.key;
+        this.name = team.name;
+        this.code = team.code;
+    }
+    Object.defineProperty(Team.prototype, "teamName", {
+        get: function () {
+            return this.name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Team;
+}());
+exports.Team = Team;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var football_service_1 = __webpack_require__(2);
 var service = new football_service_1.FootballService();
 service.getMatch().then(function (matchDays) {
     console.log(matchDays);
@@ -81,13 +106,13 @@ service.getTeam(function (teams) {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var team_1 = __webpack_require__(2);
+var team_1 = __webpack_require__(0);
 var round_1 = __webpack_require__(3);
 var FootballService = /** @class */ (function () {
     function FootballService() {
@@ -134,31 +159,6 @@ exports.FootballService = FootballService;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Team = /** @class */ (function () {
-    function Team(team) {
-        this.key = team.key;
-        this.name = team.name;
-        this.code = team.code;
-    }
-    Object.defineProperty(Team.prototype, "teamName", {
-        get: function () {
-            return this.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Team;
-}());
-exports.Team = Team;
-
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -187,7 +187,7 @@ exports.Round = Round;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var team_1 = __webpack_require__(2);
+var team_1 = __webpack_require__(0);
 var Match = /** @class */ (function () {
     function Match(match) {
         this.matchDate = new Date(match.date);
