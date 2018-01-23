@@ -7,4 +7,8 @@ export class Team {
         this.name = team.name;
         this.code = team.code;
     }
+
+    get teamName(): string {
+        return this.name;
+    }
 }

@@ -1,4 +1,5 @@
 import { Team } from '../model/team';
+import { Round } from '../model/round';
 
 export class FootballService {
     url: {team: string, match: string} = {
@@ -20,12 +21,22 @@ export class FootballService {
     }
 
     getMatch(callBack: Function): void {
-        this.getJSON(this.url.match, () => {});
+        this.getJSON(this.url.match, (data: any) => {
+            let matchArray: Round[] = [];
+            for (let round of data.rounds) {
+                matchArray.push( new Round(round) );
+            }
+            callBack(matchArray);
+        });
     }
 
     getTeam(callBack: Function): void {
         this.getJSON(this.url.team, (data: any) => {
-            callBack((data.clubs as Team[]));
+            let teamArray: Team[] = [];
+            for (let team of data.clubs) {
+                teamArray.push( new Team(team) );
+            }
+            callBack(teamArray);
         });
     }
 }

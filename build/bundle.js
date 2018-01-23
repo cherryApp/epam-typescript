@@ -72,7 +72,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var football_service_1 = __webpack_require__(1);
 var service = new football_service_1.FootballService();
-service.getMatch(function () { });
+service.getMatch(function (matchDays) {
+    console.log(matchDays);
+});
 service.getTeam(function (teams) {
     console.log(teams);
 });
@@ -85,6 +87,8 @@ service.getTeam(function (teams) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var team_1 = __webpack_require__(2);
+var round_1 = __webpack_require__(3);
 var FootballService = /** @class */ (function () {
     function FootballService() {
         this.url = {
@@ -102,16 +106,97 @@ var FootballService = /** @class */ (function () {
         this.xhr.send();
     };
     FootballService.prototype.getMatch = function (callBack) {
-        this.getJSON(this.url.match, function () { });
+        this.getJSON(this.url.match, function (data) {
+            var matchArray = [];
+            for (var _i = 0, _a = data.rounds; _i < _a.length; _i++) {
+                var round = _a[_i];
+                matchArray.push(new round_1.Round(round));
+            }
+            callBack(matchArray);
+        });
     };
     FootballService.prototype.getTeam = function (callBack) {
         this.getJSON(this.url.team, function (data) {
-            callBack(data.clubs);
+            var teamArray = [];
+            for (var _i = 0, _a = data.clubs; _i < _a.length; _i++) {
+                var team = _a[_i];
+                teamArray.push(new team_1.Team(team));
+            }
+            callBack(teamArray);
         });
     };
     return FootballService;
 }());
 exports.FootballService = FootballService;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Team = /** @class */ (function () {
+    function Team(team) {
+        this.key = team.key;
+        this.name = team.name;
+        this.code = team.code;
+    }
+    Object.defineProperty(Team.prototype, "teamName", {
+        get: function () {
+            return this.name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Team;
+}());
+exports.Team = Team;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var match_1 = __webpack_require__(4);
+var Round = /** @class */ (function () {
+    function Round(round) {
+        this.name = round.name;
+        this.matches = [];
+        console.log(round.matches);
+        for (var _i = 0, _a = round.matches; _i < _a.length; _i++) {
+            var match = _a[_i];
+            this.matches.push(new match_1.Match(match));
+        }
+    }
+    return Round;
+}());
+exports.Round = Round;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var team_1 = __webpack_require__(2);
+var Match = /** @class */ (function () {
+    function Match(match) {
+        this.matchDate = new Date(match.date);
+        this.score1 = match.score1;
+        this.score2 = match.score2;
+        this.team1 = new team_1.Team(match.team1);
+        this.team2 = new team_1.Team(match.team2);
+    }
+    return Match;
+}());
+exports.Match = Match;
 
 
 /***/ })
