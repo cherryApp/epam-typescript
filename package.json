@@ -1,0 +1,25 @@
+{
+  "name": "epam-typescript",
+  "version": "1.0.0",
+  "description": "Typescript practice for Epam.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cherryApp/epam-typescript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cherryApp/epam-typescript/issues"
+  },
+  "homepage": "https://github.com/cherryApp/epam-typescript#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^1.9.1",
+    "popper.js": "^1.12.9",
+    "ts-loader": "^3.3.1"
+  }
+}
